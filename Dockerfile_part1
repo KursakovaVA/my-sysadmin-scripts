@@ -1,0 +1,14 @@
+FROM ubuntu:22.04
+
+# Скрипт кладём в /usr/local/bin, лог — в отдельный каталог под том
+COPY script.sh /usr/local/bin/script.sh
+RUN chmod +x /usr/local/bin/script.sh \
+ && mkdir -p /var/log/monitor
+ 
+# Том для лога, чтобы он переживал пересоздание контейнера.
+# В скрипте LOG_FILE="monitor.log" — путь относительный, поэтому
+# делаем /var/log/monitor рабочей директорией.
+VOLUME ["/var/log/monitor"]
+WORKDIR /var/log/monitor
+ 
+CMD ["/usr/local/bin/script.sh"]

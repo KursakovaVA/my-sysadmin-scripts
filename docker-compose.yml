@@ -1,0 +1,11 @@
+services:
+  monitor:
+    build: .
+    image: my-script:latest
+    container_name: monitor
+    restart: unless-stopped
+    volumes:
+      - ./logs:/var/log/monitor
+    # Чтобы date внутри писал в нужном часовом поясе
+    environment:
+      - TZ=Europe/Moscow
